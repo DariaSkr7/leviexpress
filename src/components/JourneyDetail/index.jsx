@@ -1,4 +1,5 @@
 import { BusStop } from '../BusStop';
+import { SeatPicker } from '../SeatPicker';
 import { SelectedSeat } from '../SelectedSeat';
 import './style.css';
 
@@ -21,7 +22,7 @@ export const JourneyDetail = ({ journey }) => {
     <div className="journey-detail container">
       <h2>Podrobnosti cesty</h2>
       <div className="stops">{renderBusStops(journey.stops)}</div>
-      <SelectedSeat number={journey.autoSeat} />
+      <SeatPicker seats={journey.seats} />
     </div>
   );
 };
