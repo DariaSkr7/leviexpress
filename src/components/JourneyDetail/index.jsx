@@ -22,7 +22,7 @@ export const JourneyDetail = ({ journey }) => {
     <div className="journey-detail container">
       <h2>Podrobnosti cesty</h2>
       <div className="stops">{renderBusStops(journey.stops)}</div>
-      <SeatPicker seats={journey.seats} />
+      <SeatPicker seats={journey.seats} selectedSeat={journey.autoSeat} />
     </div>
   );
 };
