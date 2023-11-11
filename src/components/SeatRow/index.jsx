@@ -1,6 +1,6 @@
 import { Seat } from '../Seat';
 
-const renderSeats = (row, rowSelectedSeat) => {
+const renderSeats = (row, rowSelectedSeat, onSeatSelected) => {
   return row.map((seat) => {
     return (
       <Seat
@@ -8,11 +8,16 @@ const renderSeats = (row, rowSelectedSeat) => {
         isOccupied={seat.isOccupied}
         isSelected={seat.number === rowSelectedSeat}
         key={seat.number}
+        onSelect={onSeatSelected}
       />
     );
   });
 };
 
-export const SeatRow = ({ row, rowSelectedSeat }) => {
-  return <div className="seat-row">{renderSeats(row, rowSelectedSeat)}</div>;
+export const SeatRow = ({ row, rowSelectedSeat, onSeatSelected }) => {
+  return (
+    <div className="seat-row">
+      {renderSeats(row, rowSelectedSeat, onSeatSelected)}
+    </div>
+  );
 };

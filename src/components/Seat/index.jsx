@@ -1,12 +1,20 @@
-export const Seat = ({ number, isOccupied, isSelected }) => {
+export const Seat = ({ number, isOccupied, isSelected, onSelect }) => {
   let seatClass = '';
   if (isOccupied) {
     seatClass = 'seat--occupied';
   } else if (isSelected) {
     seatClass = 'seat--selected';
   }
+  const onClickHandle = () => {
+    onSelect(number);
+  };
   return (
-    <svg className={`seat ${seatClass}`} viewBox="0 0 100 100" role="button">
+    <svg
+      onClick={onClickHandle}
+      className={`seat ${seatClass}`}
+      viewBox="0 0 100 100"
+      role="button"
+    >
       <rect
         className="seat__rect"
         width="80"
