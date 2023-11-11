@@ -4,7 +4,7 @@ import './style.css';
 const CityOptions = ({ cities }) => {
   return cities.map((city) => {
     return (
-      <option value={city.name} key={city.code}>
+      <option value={city.code} key={city.code}>
         {city.name}
       </option>
     );
@@ -26,16 +26,7 @@ export const JourneyPicker = ({ onJourneyChange }) => {
   const [toCity, setToCity] = useState('');
   const [date, setDate] = useState('');
   const [cities, setCities] = useState([]);
-  const [dates, setDates] = useState([
-    {
-      dateBasic: '28.05.2021',
-      dateCs: 'pá 28. květen 2021',
-    },
-    {
-      dateBasic: '29.05.2021',
-      dateCs: 'so 29. květen 2021',
-    },
-  ]);
+  const [dates, setDates] = useState([]);
   useEffect(() => {
     const fetchCities = async () => {
       const response = await fetch(
@@ -69,10 +60,21 @@ export const JourneyPicker = ({ onJourneyChange }) => {
     setDate(event.target.value);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log('Odesílám formulář s cestou');
-    console.log(fromCity, toCity, date);
+    const response = await fetch(
+      `https://apps.kodim.cz/daweb/leviexpress/api/journey?fromCity=${fromCity}&toCity=${toCity}&date=${date}`,
+    );
+    const data = await response.json();
+    onJourneyChange(data.results);
+  };
+
+  const isDisabled = () => {
+    if (fromCity === '' || toCity === '' || date === '') {
+      return true;
+    } else {
+      return false;
+    }
   };
 
   return (
@@ -102,7 +104,7 @@ export const JourneyPicker = ({ onJourneyChange }) => {
             </select>
           </label>
           <div className="journey-picker__controls">
-            <button className="btn" type="submit">
+            <button disabled={isDisabled()} className="btn" type="submit">
               Vyhledat spoj
             </button>
           </div>
